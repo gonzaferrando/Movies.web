@@ -32,7 +32,7 @@ const NavBar = () => {
                             { text: "Movies", path: "/movies" },
                             { text: "Actors", path: "/actors" }
                         ].map((item) => (
-                            <li className="py-2 lg:py-0 ">
+                            <li key={item.text} className="py-2 lg:py-0 ">
                                 <a
                                     className="hover:pb-4 hover:border-b-4 hover:border-yellow-400"
                                     href={item.path}

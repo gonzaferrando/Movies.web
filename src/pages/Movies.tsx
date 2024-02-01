@@ -1,24 +1,22 @@
 import { FunctionComponent, useEffect, useState } from "react"
+import moviesApi from "../api/movieApi"
 
-type ResultProps = {
+type MoviesListResponse = {
     title: string
     description: string
-    genre: number
-    releaseDate: Date
+    releaseDate: string
 }
+
 const Movies: FunctionComponent = (): JSX.Element => {
-    const [result, setResult] = useState<ResultProps[]>([])
+    const [result, setResult] = useState<MoviesListResponse[]>([])
 
     useEffect(() => {
-        const getMovies = async () => {
-            const data = await fetch("https://localhost:7181/api/Movies", {
-                method: "GET"
-            })
-            const jsonData = await data.json()
-            setResult(jsonData)
+        const getMoviesList = async () => {
+            const response = await moviesApi.getMovies<MoviesListResponse[]>()
+            setResult(response.data)
         }
 
-        getMovies()
+        getMoviesList()
     }, [])
 
     return (
@@ -27,7 +25,10 @@ const Movies: FunctionComponent = (): JSX.Element => {
             <div className="grid grid-cols-2 md:grid-cols-3 mt-10">
                 {result.map((movie) => {
                     return (
-                        <div className="border rounded-lg bg-white text-center m-2 md:mx-4 md:mb-4">
+                        <div
+                            key={movie.title}
+                            className="border rounded-lg bg-white text-center m-2 md:mx-4 md:mb-4"
+                        >
                             <div className="p-6">
                                 <h5 className="mb-2 text-xl font-medium leading-tight text-neutral-800 dark:text-neutral-50">
                                     {movie.title}
