@@ -1,18 +1,13 @@
 import { FunctionComponent, useEffect, useState } from "react"
-import moviesApi from "../api/movieApi"
-
-type MoviesListResponse = {
-    title: string
-    description: string
-    releaseDate: string
-}
+import moviesApi from "../api/moviesApi"
+import { MoviesListResponse } from "../types"
 
 const Movies: FunctionComponent = (): JSX.Element => {
     const [result, setResult] = useState<MoviesListResponse[]>([])
 
     useEffect(() => {
         const getMoviesList = async () => {
-            const response = await moviesApi.getMovies<MoviesListResponse[]>()
+            const response = await moviesApi.getAll<MoviesListResponse[]>()
             setResult(response.data)
         }
 
